@@ -3,6 +3,7 @@
 
 #include "UMCharacter.h"
 
+#include "UMInteractionComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -17,6 +18,7 @@ namespace
 	FName PrimaryAttackAction = FName("PrimaryAttack");
 	FName SecondaryAttackAction = FName("SecondaryAttack");
 	FName JumpAction = FName("Jump");
+	FName PrimaryInteractAction = FName("PrimaryInteract");
 }
 
 AUMCharacter::AUMCharacter()
@@ -29,6 +31,8 @@ AUMCharacter::AUMCharacter()
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComponent->SetupAttachment(SpringArmComponent);
+
+	InteractionComponent = CreateDefaultSubobject<UUMInteractionComponent>("Interaction Component");
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
@@ -57,6 +61,7 @@ void AUMCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction(PrimaryAttackAction, IE_Pressed, this, &AUMCharacter::PrimaryAttack);
 	PlayerInputComponent->BindAction(SecondaryAttackAction, IE_Pressed, this, &AUMCharacter::SecondaryAttack);
 	PlayerInputComponent->BindAction(JumpAction, IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction(PrimaryInteractAction, IE_Pressed, this, &AUMCharacter::PrimaryInteract);
 }
 
 void AUMCharacter::MoveForward(float Value)
@@ -98,4 +103,12 @@ void AUMCharacter::PrimaryAttack()
 
 void AUMCharacter::SecondaryAttack()
 {
+}
+
+void AUMCharacter::PrimaryInteract()
+{
+	if (IsValid(InteractionComponent))
+	{
+		InteractionComponent->PrimaryInteract();
+	}
 }

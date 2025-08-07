@@ -7,6 +7,7 @@
 #include "UMMagicProjectile.h"
 #include "UMCharacter.generated.h"
 
+class UUMInteractionComponent;
 class USpringArmComponent;
 class UCameraComponent;
 
@@ -31,11 +32,7 @@ protected:
 	void PrimaryAttack();
 	void SecondaryAttack();
 
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<USpringArmComponent> SpringArmComponent = nullptr;
-
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UCameraComponent> CameraComponent = nullptr;
+	void PrimaryInteract();
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AUMMagicProjectile> PrimaryAttackProjectileClass = nullptr;
@@ -48,4 +45,14 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	FName SecondaryAttackSocket;
+
+private:
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USpringArmComponent> SpringArmComponent = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UCameraComponent> CameraComponent = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UUMInteractionComponent> InteractionComponent = nullptr;
 };
